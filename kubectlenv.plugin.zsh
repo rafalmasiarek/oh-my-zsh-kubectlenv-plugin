@@ -1,10 +1,10 @@
 #!/usr/bin/env bash 
-# Author: Rafal Masiarek 
+# Author: Rafal Masiarek
 # inspired by Pawel Malinowski
 #
 # function `sort_version` stolen from asdf kubectl plugin
 # where author stole this from rbenv
-# https://www.reddit.com/media?url=https%3A%2F%2Fpreview.redd.it%2Fsteal-what-is-stolen-v0-hwurhp7crzf81.png%3Fauto%3Dwebp%26s%3De73425aa7637794627ee62c94ef2c4b608cc9d76
+# https://img-9gag-fun.9cache.com/photo/aRrZA6B_700bwp.webp
 
 
 export __KUBECTLENV_HOMEDIR=$HOME/.oh-my-zsh/custom/plugins/kubectlenv
