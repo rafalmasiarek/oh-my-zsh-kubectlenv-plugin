@@ -4,12 +4,10 @@
 #
 # function `sort_version` stolen from asdf kubectl plugin
 # where author stole this from rbenv
-# https://img-9gag-fun.9cache.com/photo/aRrZA6B_700bwp.webp
+# https://imgur.com/a/DYL68S7
 
 
-export __KUBECTLENV_HOMEDIR=$HOME/.oh-my-zsh/custom/plugins/kubectlenv
-
-source $__KUBECTLENV_HOMEDIR/_kubectl
+export __KUBECTLENV_HOMEDIR=$HOME/.kubectlenv
 
 function __kubectlenv_utils_wget {
     wget "$@" -q --show-progress --progress=bar:force
@@ -64,17 +62,18 @@ function __kubectlenv_get_version()
         esac
 
         case "$(uname -m)" in
-            "86_64") ARCH="amd64" ;;
+            "86_64"|"x86_64") ARCH="amd64" ;;
             "arm64"|"aarch64") ARCH="arm64";;
             *) ARCH="unknown" ;;
         esac
 
         echo "Trying to find and get kubectl $VERSION"
+        echo "Download from https://dl.k8s.io/v$VERSION/kubernetes-client-$PLATFORM-$ARCH.tar.gz"
         if __kubectlenv_utils_wget "https://dl.k8s.io/v$VERSION/kubernetes-client-$PLATFORM-$ARCH.tar.gz" -P "/tmp"; then
             tmp_dir=$(mktemp -d /tmp/kubernetes-client-$VERSION-$PLATFORM-$ARCH.XXXX)
 
             tar zxf /tmp/kubernetes-client-$PLATFORM-$ARCH.tar.gz -C $tmp_dir
-            mkdir $__KUBECTLENV_HOMEDIR/$VERSION
+            mkdir -p $__KUBECTLENV_HOMEDIR/$VERSION
             install -m 0755 $tmp_dir/kubernetes/client/bin/kubectl $__KUBECTLENV_HOMEDIR/$VERSION/kubectl
             # cleanup
             rm -rf $tmp_dir /tmp/kubernetes-client-$PLATFORM-$ARCH.tar.gz
@@ -94,12 +93,8 @@ function __kubectlenv_set_version()
         VERSION=$(__kubectlenv_utils_get_specific_version $1)
     fi
 
-    if [[ ! -f "$__KUBECTLENV_HOMEDIR/_kubectl" ]]; then
-        echo "alias kubectl=" > $__KUBECTLENV_HOMEDIR/_kubectl
-    fi
-
-    sed -i '' -r "s#^(alias kubectl=).*#\1${__KUBECTLENV_HOMEDIR}/$VERSION/kubectl#" $__KUBECTLENV_HOMEDIR/_kubectl
-    source $__KUBECTLENV_HOMEDIR/_kubectl
+    mkdir -p $__KUBECTLENV_HOMEDIR/bin
+    ln -sfn ${__KUBECTLENV_HOMEDIR}/$VERSION/kubectl $__KUBECTLENV_HOMEDIR/bin/kubectl
 }
 
 function kubectlenv() 

@@ -1,15 +1,20 @@
 # oh-my-zsh-kubectlenv-plugin
+![GitHub Release](https://img.shields.io/github/v/release/rafalmasiarek/oh-my-zsh-kubectlenv-plugin)
+
 Plugin for [oh-my-zsh](https://ohmyz.sh/) to easy managed kubectl multiple versions
 
 # Installation
-1) Clone repository to `~/.oh-my-zsh/custom/plugins`
+1) Clone repository into `oh-my-zsh` custom plugins folder
 ```
-cd ~/.oh-my-zsh/custom/plugins
-git clone https://github.com/rafalmasiarek/oh-my-zsh-kubectlenv-plugin.git kubectlenv
+git clone https://github.com/rafalmasiarek/oh-my-zsh-kubectlenv-plugin.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/kubectlenv
 ```
 2) To enable kubectlenv plugin, add `kubectlenv` to the plugins array of your zshrc `~/.zshrc`:
 ```
 plugins=(... kubectlenv)
+```
+3) Add kubectl path to your PATH environment variable (mostly in your `~/.zshrc`):
+```
+export PATH=$HOME/.kubectlenv/bin:(...)
 ```
 and reload your terminal or use command:
 ```
@@ -26,10 +31,10 @@ virtualenv -h    : Print help message
 ```
 
 ## Example:
-1) Set `kubectl` version to latest 1.26 (and download if you don't have one)
+1) Set `kubectl` version to latest 1.31 (and download if you don't have one)
 ```
-$ virtualenv -v 1.26
-Trying to find and get kubectl 1.26.7 
+$ virtualenv -v 1.31
+Trying to find and get kubectl 1.31.1 
 ```
 
 ## License
